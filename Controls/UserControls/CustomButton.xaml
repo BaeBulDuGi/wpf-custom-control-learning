@@ -1,0 +1,38 @@
+<UserControl x:Class="WpfApp.Controls.UserControls.CustomButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="50" d:DesignWidth="200">
+    <Border x:Name="MainBorder"
+            Background="LightBlue"
+            BorderBrush="DarkBlue"
+            BorderThickness="2"
+            CornerRadius="10"
+            Cursor="Hand">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- 아이콘 영역 -->
+            <Ellipse Grid.Column="0"
+                     Width="30"
+                     Height="30"
+                     Fill="DarkBlue"
+                     Margin="10,0,10,0"/>
+
+            <!-- 텍스트 영역 -->
+            <TextBlock x:Name="ButtonText"
+                       Grid.Column="1"
+                       Text="Custom Button"
+                       FontSize="16"
+                       FontWeight="Bold"
+                       Foreground="DarkBlue"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"/>
+        </Grid>
+    </Border>
+</UserControl>

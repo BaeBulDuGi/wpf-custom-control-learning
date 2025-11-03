@@ -1,0 +1,520 @@
+<Window x:Class="WpfApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:uc="clr-namespace:WpfApp.Controls.UserControls"
+        xmlns:cc="clr-namespace:WpfApp.Controls.CustomControls"
+        mc:Ignorable="d"
+        Title="WPF Custom Control 학습" Height="800" Width="1000"
+        Background="#FF2C2C2C">
+
+    <!-- Control Template 리소스 로드 -->
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Controls/Templates/ButtonTemplates.xaml"/>
+                <ResourceDictionary Source="Controls/Templates/MenuListTemplates.xaml"/>
+                <ResourceDictionary Source="Controls/Templates/AnimatedTemplates.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- 타이틀 -->
+        <TextBlock Grid.Row="0"
+                   Text="WPF Custom Control 학습"
+                   FontSize="28"
+                   FontWeight="Bold"
+                   Foreground="White"
+                   HorizontalAlignment="Center"
+                   Margin="20"/>
+
+        <!-- 탭 컨트롤 -->
+        <TabControl Grid.Row="1" Background="#FF2C2C2C" Margin="10">
+            <!-- 버튼 예제 탭 -->
+            <TabItem Header="Button Controls">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="20">
+
+            <!-- 1. UserControl 방식 -->
+            <Border Background="#FF3C3C3C" Padding="20" Margin="0,0,0,20" CornerRadius="10">
+                <StackPanel>
+                    <TextBlock Text="1. UserControl 방식 - 기존 컨트롤 조합"
+                               FontSize="20"
+                               FontWeight="Bold"
+                               Foreground="#FF6C63FF"
+                               Margin="0,0,0,10"/>
+
+                    <TextBlock TextWrapping="Wrap" Foreground="LightGray" Margin="0,0,0,15">
+                        <Run Text="• 장점: 쉽고 빠르게 제작, XAML 디자이너 사용 가능"/>
+                        <LineBreak/>
+                        <Run Text="• 단점: 성능이 약간 낮음, 재사용성 제한적"/>
+                        <LineBreak/>
+                        <Run Text="• 사용 시기: 빠른 프로토타이핑, 간단한 컴포넌트 조합"/>
+                    </TextBlock>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <uc:CustomButton x:Name="UserControlButton1"
+                                       Text="UserControl 버튼 1"
+                                       Width="220" Height="60"
+                                       Margin="10"
+                                       Click="CustomButton_Click"/>
+
+                        <uc:CustomButton x:Name="UserControlButton2"
+                                       Text="UserControl 버튼 2"
+                                       Width="220" Height="60"
+                                       Margin="10"
+                                       Click="CustomButton_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- 2. OnRender Custom Control 방식 -->
+            <Border Background="#FF3C3C3C" Padding="20" Margin="0,0,0,20" CornerRadius="10">
+                <StackPanel>
+                    <TextBlock Text="2. OnRender() Custom Control - MFC OnDraw 스타일"
+                               FontSize="20"
+                               FontWeight="Bold"
+                               Foreground="#FF00FF7F"
+                               Margin="0,0,0,10"/>
+
+                    <TextBlock TextWrapping="Wrap" Foreground="LightGray" Margin="0,0,0,15">
+                        <Run Text="• 장점: 완전한 제어, 고성능, MFC 개발자에게 친숙"/>
+                        <LineBreak/>
+                        <Run Text="• 단점: 코드가 많아짐, 모든 것을 직접 그려야 함"/>
+                        <LineBreak/>
+                        <Run Text="• 사용 시기: 복잡한 커스텀 그래픽, 차트, 특수 컨트롤"/>
+                        <LineBreak/>
+                        <Run Text="• MFC 대응: OnRender() ≈ OnDraw(), InvalidateVisual() ≈ Invalidate()"/>
+                    </TextBlock>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <cc:CustomDrawButton x:Name="DrawButton1"
+                                           Text="OnRender 버튼 1"
+                                           Width="220" Height="60"
+                                           Margin="10"
+                                           Click="CustomDrawButton_Click"/>
+
+                        <cc:CustomDrawButton x:Name="DrawButton2"
+                                           Text="OnRender 버튼 2"
+                                           Width="220" Height="60"
+                                           Margin="10"
+                                           Click="CustomDrawButton_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- 3. Control Template 방식 -->
+            <Border Background="#FF3C3C3C" Padding="20" Margin="0,0,0,20" CornerRadius="10">
+                <StackPanel>
+                    <TextBlock Text="3. Control Template - WPF의 강력한 방식"
+                               FontSize="20"
+                               FontWeight="Bold"
+                               Foreground="#FFFF6B6B"
+                               Margin="0,0,0,10"/>
+
+                    <TextBlock TextWrapping="Wrap" Foreground="LightGray" Margin="0,0,0,15">
+                        <Run Text="• 장점: 코드 수정 없이 디자인 변경, 재사용성 최고, XAML만으로 가능"/>
+                        <LineBreak/>
+                        <Run Text="• 단점: 복잡한 로직은 구현 어려움"/>
+                        <LineBreak/>
+                        <Run Text="• 사용 시기: 표준 컨트롤 디자인 변경, 테마 시스템, 디자인 중심"/>
+                    </TextBlock>
+
+                    <!-- 모던 스타일 -->
+                    <TextBlock Text="모던 플랫 디자인"
+                               Foreground="White"
+                               FontSize="14"
+                               Margin="0,10,0,5"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Content="모던 버튼 1"
+                                Style="{StaticResource ModernButtonStyle}"
+                                Margin="10"
+                                Click="TemplateButton_Click"/>
+                        <Button Content="모던 버튼 2"
+                                Style="{StaticResource ModernButtonStyle}"
+                                Margin="10"
+                                Click="TemplateButton_Click"/>
+                    </StackPanel>
+
+                    <!-- 네온 스타일 -->
+                    <TextBlock Text="네온 효과"
+                               Foreground="White"
+                               FontSize="14"
+                               Margin="0,20,0,5"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Content="네온 버튼 1"
+                                Style="{StaticResource NeonButtonStyle}"
+                                Margin="10"
+                                Click="TemplateButton_Click"/>
+                        <Button Content="네온 버튼 2"
+                                Style="{StaticResource NeonButtonStyle}"
+                                Margin="10"
+                                Click="TemplateButton_Click"/>
+                    </StackPanel>
+
+                    <!-- 3D 스타일 -->
+                    <TextBlock Text="3D 효과"
+                               Foreground="White"
+                               FontSize="14"
+                               Margin="0,20,0,5"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Content="3D 버튼 1"
+                                Style="{StaticResource ThreeDButtonStyle}"
+                                Margin="10"
+                                Click="TemplateButton_Click"/>
+                        <Button Content="3D 버튼 2"
+                                Style="{StaticResource ThreeDButtonStyle}"
+                                Margin="10"
+                                Click="TemplateButton_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+                        <!-- 결과 표시 영역 -->
+                        <Border Background="#FF4CAF50" Padding="20" CornerRadius="10">
+                            <TextBlock x:Name="ResultTextBlock"
+                                       Text="버튼을 클릭해보세요!"
+                                       FontSize="20"
+                                       FontWeight="Bold"
+                                       Foreground="White"
+                                       HorizontalAlignment="Center"
+                                       TextAlignment="Center"
+                                       TextWrapping="Wrap"/>
+                        </Border>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- 리스트/메뉴 예제 탭 -->
+            <TabItem Header="List/Menu Controls">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="20">
+
+                        <!-- 리스트 결과 표시 영역 -->
+                        <Border Background="#FF4CAF50" Padding="20" CornerRadius="10" Margin="0,0,0,20">
+                            <TextBlock x:Name="ListResultTextBlock"
+                                       Text="메뉴 항목을 클릭해보세요!"
+                                       FontSize="20"
+                                       FontWeight="Bold"
+                                       Foreground="White"
+                                       HorizontalAlignment="Center"
+                                       TextAlignment="Center"
+                                       TextWrapping="Wrap"/>
+                        </Border>
+
+                        <!-- 1. UserControl 방식 -->
+                        <Border Background="#FF3C3C3C" Padding="20" Margin="0,0,0,20" CornerRadius="10">
+                            <StackPanel>
+                                <TextBlock Text="1. UserControl 방식 - 메뉴 리스트"
+                                           FontSize="20"
+                                           FontWeight="Bold"
+                                           Foreground="#FF6C63FF"
+                                           Margin="0,0,0,10"/>
+
+                                <TextBlock TextWrapping="Wrap" Foreground="LightGray" Margin="0,0,0,15">
+                                    <Run Text="• XAML로 조합한 커스텀 리스트 아이템"/>
+                                    <LineBreak/>
+                                    <Run Text="• 왼쪽: 동그란 아이콘, 오른쪽: 제목 + 설명"/>
+                                </TextBlock>
+
+                                <Border Background="#FF2C2C2C" CornerRadius="8" Padding="0">
+                                    <StackPanel>
+                                        <uc:MenuListItem Title="홈"
+                                                       Description="메인 페이지로 이동"
+                                                       Click="MenuListItem_Click"/>
+                                        <uc:MenuListItem Title="설정"
+                                                       Description="애플리케이션 설정"
+                                                       Click="MenuListItem_Click"/>
+                                        <uc:MenuListItem Title="프로필"
+                                                       Description="사용자 프로필 보기"
+                                                       Click="MenuListItem_Click"/>
+                                        <uc:MenuListItem Title="알림"
+                                                       Description="새로운 알림 확인"
+                                                       Click="MenuListItem_Click"/>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- 2. OnRender Custom Control 방식 -->
+                        <Border Background="#FF3C3C3C" Padding="20" Margin="0,0,0,20" CornerRadius="10">
+                            <StackPanel>
+                                <TextBlock Text="2. OnRender() Custom Control - MFC OnDraw 스타일"
+                                           FontSize="20"
+                                           FontWeight="Bold"
+                                           Foreground="#FF00FF7F"
+                                           Margin="0,0,0,10"/>
+
+                                <TextBlock TextWrapping="Wrap" Foreground="LightGray" Margin="0,0,0,15">
+                                    <Run Text="• DrawingContext로 직접 그린 메뉴 아이템"/>
+                                    <LineBreak/>
+                                    <Run Text="• MFC의 OnDraw()처럼 완전한 제어"/>
+                                </TextBlock>
+
+                                <Border Background="#FF2C2C2C" CornerRadius="8" Padding="0">
+                                    <StackPanel>
+                                        <cc:CustomDrawMenuItem Title="대시보드"
+                                                             Description="통계 및 요약 정보"
+                                                             IconColor="OrangeRed"
+                                                             Click="DrawMenuItem_Click"/>
+                                        <cc:CustomDrawMenuItem Title="문서"
+                                                             Description="문서 및 파일 관리"
+                                                             IconColor="Orange"
+                                                             Click="DrawMenuItem_Click"/>
+                                        <cc:CustomDrawMenuItem Title="메시지"
+                                                             Description="받은 메시지 확인"
+                                                             IconColor="Coral"
+                                                             Click="DrawMenuItem_Click"/>
+                                        <cc:CustomDrawMenuItem Title="도움말"
+                                                             Description="사용 가이드 및 지원"
+                                                             IconColor="Tomato"
+                                                             Click="DrawMenuItem_Click"/>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- 3. Control Template 방식 -->
+                        <Border Background="#FF3C3C3C" Padding="20" Margin="0,0,0,20" CornerRadius="10">
+                            <StackPanel>
+                                <TextBlock Text="3. Control Template - WPF ListBox 재정의"
+                                           FontSize="20"
+                                           FontWeight="Bold"
+                                           Foreground="#FFFF6B6B"
+                                           Margin="0,0,0,10"/>
+
+                                <TextBlock TextWrapping="Wrap" Foreground="LightGray" Margin="0,0,0,15">
+                                    <Run Text="• ListBox의 템플릿을 재정의한 메뉴 리스트"/>
+                                    <LineBreak/>
+                                    <Run Text="• 데이터 바인딩 지원, 선택 기능 내장"/>
+                                </TextBlock>
+
+                                <!-- 기본 메뉴 스타일 -->
+                                <TextBlock Text="기본 메뉴바 스타일"
+                                           Foreground="White"
+                                           FontSize="14"
+                                           Margin="0,10,0,5"/>
+                                <ListBox x:Name="TemplateListBox"
+                                         Style="{StaticResource MenuListBoxStyle}"
+                                         ItemTemplate="{StaticResource MenuItemDataTemplate}"
+                                         SelectionChanged="TemplateListBox_SelectionChanged"/>
+
+                                <!-- 카드 스타일 -->
+                                <TextBlock Text="모던 카드 스타일"
+                                           Foreground="White"
+                                           FontSize="14"
+                                           Margin="0,20,0,5"/>
+                                <ListBox x:Name="CardListBox"
+                                         Style="{StaticResource ModernCardListBoxStyle}"
+                                         ItemTemplate="{StaticResource MenuItemDataTemplate}"
+                                         SelectionChanged="CardListBox_SelectionChanged"/>
+                            </StackPanel>
+                        </Border>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- 고급 예제 탭 -->
+            <TabItem Header="Advanced Topics">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="20">
+
+                        <!-- 결과 표시 영역 -->
+                        <Border Background="#FF4CAF50" Padding="20" CornerRadius="10" Margin="0,0,0,20">
+                            <TextBlock x:Name="AdvancedResultTextBlock"
+                                       Text="고급 예제를 체험해보세요!"
+                                       FontSize="20"
+                                       FontWeight="Bold"
+                                       Foreground="White"
+                                       HorizontalAlignment="Center"
+                                       TextAlignment="Center"
+                                       TextWrapping="Wrap"/>
+                        </Border>
+
+                        <!-- 5. Dependency Property 예제 -->
+                        <Border Background="#FF3C3C3C" Padding="20" Margin="0,0,0,20" CornerRadius="10">
+                            <StackPanel>
+                                <TextBlock Text="5. Dependency Property - 커스텀 프로그레스 바"
+                                           FontSize="20"
+                                           FontWeight="Bold"
+                                           Foreground="#FF9C27B0"
+                                           Margin="0,0,0,10"/>
+
+                                <TextBlock TextWrapping="Wrap" Foreground="LightGray" Margin="0,0,0,15">
+                                    <Run Text="• Dependency Property란? 데이터 바인딩, 애니메이션, 스타일을 지원하는 특별한 프로퍼티"/>
+                                    <LineBreak/>
+                                    <Run Text="• 일반 Property와 달리 값 변경 시 자동으로 UI 업데이트"/>
+                                    <LineBreak/>
+                                    <Run Text="• 값 검증(Coerce), 변경 알림(Callback) 기능 내장"/>
+                                </TextBlock>
+
+                                <cc:CustomProgressBar x:Name="ProgressBar1"
+                                                    Width="400" Height="40"
+                                                    Margin="0,10,0,10"
+                                                    BarColor="DodgerBlue"
+                                                    ShowPercentage="True"/>
+
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+                                    <Button Content="값 증가 (+10)"
+                                            Style="{StaticResource AnimatedScaleButtonStyle}"
+                                            Margin="5"
+                                            Click="IncreaseProgress_Click"/>
+                                    <Button Content="값 감소 (-10)"
+                                            Style="{StaticResource AnimatedScaleButtonStyle}"
+                                            Margin="5"
+                                            Click="DecreaseProgress_Click"/>
+                                    <Button Content="리셋"
+                                            Style="{StaticResource AnimatedScaleButtonStyle}"
+                                            Margin="5"
+                                            Click="ResetProgress_Click"/>
+                                </StackPanel>
+
+                                <TextBlock Text="💡 코드에서 ProgressBar1.Value = 50; 으로 값 변경하면 UI가 자동 업데이트!"
+                                           Foreground="Yellow"
+                                           FontSize="12"
+                                           Margin="0,15,0,0"
+                                           TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- 6. 애니메이션 템플릿 -->
+                        <Border Background="#FF3C3C3C" Padding="20" Margin="0,0,0,20" CornerRadius="10">
+                            <StackPanel>
+                                <TextBlock Text="6. Control Template + Animation"
+                                           FontSize="20"
+                                           FontWeight="Bold"
+                                           Foreground="#FFFF9800"
+                                           Margin="0,0,0,10"/>
+
+                                <TextBlock TextWrapping="Wrap" Foreground="LightGray" Margin="0,0,0,15">
+                                    <Run Text="• XAML만으로 부드러운 애니메이션 구현"/>
+                                    <LineBreak/>
+                                    <Run Text="• Trigger + Storyboard 조합"/>
+                                    <LineBreak/>
+                                    <Run Text="• 코드 없이 Hover/Press 효과"/>
+                                </TextBlock>
+
+                                <TextBlock Text="애니메이션 버튼 (Hover/Press 애니메이션)"
+                                           Foreground="White"
+                                           Margin="0,10,0,5"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Button Content="애니메이션 1"
+                                            Style="{StaticResource AnimatedScaleButtonStyle}"
+                                            Margin="10"/>
+                                    <Button Content="애니메이션 2"
+                                            Style="{StaticResource AnimatedScaleButtonStyle}"
+                                            Margin="10"/>
+                                </StackPanel>
+
+                                <TextBlock Text="로딩 스피너 (무한 회전 애니메이션)"
+                                           Foreground="White"
+                                           Margin="0,20,0,5"/>
+                                <Control x:Name="LoadingSpinner"
+                                         Style="{StaticResource LoadingSpinnerStyle}"
+                                         Width="60" Height="60"
+                                         HorizontalAlignment="Center"/>
+
+                                <Button Content="스피너 토글"
+                                        Style="{StaticResource AnimatedScaleButtonStyle}"
+                                        Margin="0,10,0,0"
+                                        HorizontalAlignment="Center"
+                                        Click="ToggleSpinner_Click"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- 7. MVVM 패턴 -->
+                        <Border Background="#FF3C3C3C" Padding="20" Margin="0,0,0,20" CornerRadius="10">
+                            <StackPanel>
+                                <TextBlock Text="7. MVVM 패턴 - Model-View-ViewModel"
+                                           FontSize="20"
+                                           FontWeight="Bold"
+                                           Foreground="#FF4CAF50"
+                                           Margin="0,0,0,10"/>
+
+                                <TextBlock TextWrapping="Wrap" Foreground="LightGray" Margin="0,0,0,15">
+                                    <Run Text="• View(UI)와 Logic(코드)을 완전히 분리"/>
+                                    <LineBreak/>
+                                    <Run Text="• ViewModel: 데이터와 명령(Command)을 제공"/>
+                                    <LineBreak/>
+                                    <Run Text="• INotifyPropertyChanged: 데이터 변경 시 UI 자동 업데이트"/>
+                                    <LineBreak/>
+                                    <Run Text="• ICommand: 버튼 클릭 등의 사용자 액션 처리"/>
+                                </TextBlock>
+
+                                <!-- MVVM 예제 UI -->
+                                <Border Background="#FF2C2C2C" CornerRadius="8" Padding="20">
+                                    <StackPanel x:Name="MvvmExamplePanel">
+                                        <!-- DataContext가 CounterViewModel로 설정됨 -->
+
+                                        <!-- 카운트 표시 (바인딩) -->
+                                        <TextBlock Text="{Binding Count}"
+                                                   FontSize="48"
+                                                   FontWeight="Bold"
+                                                   Foreground="White"
+                                                   HorizontalAlignment="Center"
+                                                   Margin="0,0,0,10"/>
+
+                                        <!-- 메시지 표시 (바인딩) -->
+                                        <TextBlock Text="{Binding Message}"
+                                                   FontSize="16"
+                                                   Foreground="LightGray"
+                                                   HorizontalAlignment="Center"
+                                                   TextWrapping="Wrap"
+                                                   Margin="0,0,0,20"/>
+
+                                        <!-- 버튼들 (Command 바인딩) -->
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
+                                            <Button Content="증가"
+                                                    Command="{Binding IncrementCommand}"
+                                                    Style="{StaticResource AnimatedScaleButtonStyle}"
+                                                    Margin="5"/>
+                                            <Button Content="감소"
+                                                    Command="{Binding DecrementCommand}"
+                                                    Style="{StaticResource AnimatedScaleButtonStyle}"
+                                                    Margin="5"/>
+                                            <Button Content="리셋"
+                                                    Command="{Binding ResetCommand}"
+                                                    Style="{StaticResource AnimatedScaleButtonStyle}"
+                                                    Margin="5"/>
+                                        </StackPanel>
+
+                                        <!-- 입력 예제 -->
+                                        <TextBlock Text="텍스트 입력 (양방향 바인딩):"
+                                                   Foreground="White"
+                                                   Margin="0,0,0,5"/>
+                                        <TextBox Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}"
+                                                 Width="300"
+                                                 Height="30"
+                                                 FontSize="14"
+                                                 Margin="0,0,0,10"/>
+                                        <Button Content="입력 내용 표시"
+                                                Command="{Binding ShowInputCommand}"
+                                                Style="{StaticResource AnimatedScaleButtonStyle}"
+                                                HorizontalAlignment="Center"/>
+
+                                        <TextBlock Text="💡 버튼 활성화/비활성화가 자동으로! (CanExecute)"
+                                                   Foreground="Yellow"
+                                                   FontSize="12"
+                                                   Margin="0,15,0,0"
+                                                   TextWrapping="Wrap"
+                                                   HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </Border>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
