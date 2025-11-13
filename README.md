@@ -39,7 +39,7 @@
 
 ```bash
 # 저장소 클론
-git clone https://github.com/YOUR_USERNAME/wpf-custom-control-learning.git
+git clone https://github.com/BaeBulDuGi/wpf-custom-control-learning.git
 cd wpf-custom-control-learning
 
 # 실행
